@@ -1,8 +1,6 @@
 const puppeteer = require('puppeteer');
-const path = require('path');
 const request = require('request');
 const fs = require('fs');
-const timeout = require('await-timeout');
 
 async function getMediaUrl(url){
   let mp3Url = null;
