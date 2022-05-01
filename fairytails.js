@@ -1,7 +1,9 @@
 const puppeteer = require('puppeteer');
 const request = require('request');
 const fs = require('fs');
-const axios = require('axios')
+const axios = require('axios');
+const yargs = require('yargs');
+const { hideBin } = require('yargs/helpers')
 
 const MEDIA_URL = 'https://api.rtvslo.si/ava/getMedia';
 const FAIRY_TAIL_URL = 'https://ziv-zav.rtvslo.si/predvajaj/lahko-noc-otroci';
@@ -86,11 +88,11 @@ async function scrapeFairyTaleIds(url) {
   }
 }
 
-async function getFairyTales(fairy_no = 1) {
+async function getFairyTales(last = 1) {
   return axios
     .get(FAIRY_TAIL_API_ENDPOINT, {
       params: {
-        pageSize: fairy_no
+        pageSize: last
       }
     })
     .then(res => {
@@ -107,8 +109,8 @@ async function downloadLastFairyTale() {
 }
 
 // dowload last 10 fairytales 
-async function downloadLatest() {
-  const fairytales = await getFairyTales(10);
+async function downloadLatest(last) {
+  const fairytales = await getFairyTales(last);
   // For is waiting for promise to resolve
   for (const fairy_tale of fairytales) {
     // Start and wait for file to be downloaded
@@ -118,5 +120,12 @@ async function downloadLatest() {
   }
 }
 
-//downloadLastFairyTale();
-downloadLatest();
+const argv = yargs(hideBin(process.argv)).argv
+
+if (typeof argv.latest !== 'undefined') {
+  downloadLastFairyTale();
+} else {
+  var last = (typeof argv.last !== 'undefined') ? argv.last : 10;
+  last = last > 50 ? 50 : last
+  downloadLatest(last);
+}

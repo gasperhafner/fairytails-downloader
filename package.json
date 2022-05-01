@@ -20,6 +20,7 @@
     "axios": "^0.27.2",
     "fs": "0.0.1-security",
     "puppeteer": "^13.7.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "yargs": "^17.4.1"
   }
 }
