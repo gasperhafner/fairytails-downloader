@@ -1,0 +1,24 @@
+{
+  "name": "fairytails-downloader",
+  "version": "1.0.0",
+  "description": "Run script:",
+  "main": "fairytails.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gasperhafner/fairytails-downloader.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gasperhafner/fairytails-downloader/issues"
+  },
+  "homepage": "https://github.com/gasperhafner/fairytails-downloader#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "puppeteer": "^13.7.0",
+    "request": "^2.88.2"
+  }
+}

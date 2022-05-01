@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const request = require('request');
 const fs = require('fs');
 
-async function getMediaUrl(url){
+async function getMediaUrl(url) {
   let mp3Url = null;
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -12,10 +12,10 @@ async function getMediaUrl(url){
     if (interceptedRequest.isInterceptResolutionHandled()) return;
     if (
       interceptedRequest.url().includes('https://api.rtvslo.si/ava/getMedia')
-    ){
+    ) {
       mp3Url = interceptedRequest.url();
       interceptedRequest.abort();
-    }else {
+    } else {
       interceptedRequest.continue();
     }
   });
@@ -25,7 +25,7 @@ async function getMediaUrl(url){
   return mp3Url;
 };
 
-async function getTitle(url){
+async function getTitle(url) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);
@@ -36,11 +36,11 @@ async function getTitle(url){
   return match[1];
 };
 
-async function getMp3Url(url){
-	let browser;
-  
-	try{
-		url = await getMediaUrl(url);
+async function getMp3Url(url) {
+  let browser;
+
+  try {
+    url = await getMediaUrl(url);
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
@@ -49,37 +49,37 @@ async function getMp3Url(url){
     const regex = /\"https"\:\"(.*?)\?/;
     const match = websiteContent.match(regex);
     return match[1];
-	}
-	catch(err){
-		console.log("Could not resolve the browser instance => ", err);
-	}
+  }
+  catch (err) {
+    console.log("Could not resolve the browser instance => ", err);
+  }
 }
 
-async function downloadMp3(id){
+async function downloadMp3(id) {
   let url = `https://ziv-zav.rtvslo.si/predvajaj/lahko-noc-otroci/${id}`
 
 
-	try{
+  try {
     let mp3Url = await getMp3Url(url);
     let title = await getTitle(url);
     console.log(mp3Url);
     console.log(title);
 
     request.get(mp3Url)
-      .on('error', function(err) {})
+      .on('error', function (err) { })
       .pipe(fs.createWriteStream(`downloads/${title}.mp3`));
-    }
-	catch(err){
-		console.log(err);
-	}
+  }
+  catch (err) {
+    console.log(err);
+  }
 }
 
 //downloadMp3("https://ziv-zav.rtvslo.si/predvajaj/lahko-noc-otroci/174867111");
 
-async function getFairyTaleIds(url){
+async function getFairyTaleIds(url) {
   let browser;
-  
-	try{
+
+  try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
@@ -88,15 +88,15 @@ async function getFairyTaleIds(url){
     const regex = /\d{9}/g;
     const match = websiteContent.match(regex);
     return [...new Set(match)];
-	}
-	catch(err){
-		console.log("Could not resolve the browser instance => ", err);
-	}
+  }
+  catch (err) {
+    console.log("Could not resolve the browser instance => ", err);
+  }
 }
 
 
 
-async function downloadAll(){
+async function downloadAll() {
   //let ids = await getFairyTaleIds("https://ziv-zav.rtvslo.si/oddaja/lahko-noc-otroci/54/oddaje");
   let ids = [
     174868311, 174867111, 174867110, 174867109, 174866804, 174866798,
@@ -122,7 +122,7 @@ async function downloadAll(){
     174834944
   ]
 
-  ids = [174868311, 174867111, 174867110, 174867109]
+  ids = [174835524, 174835523, 174835517, 174835515, 174835285, 174835269, 174834944]
   ids.forEach(downloadMp3);
 }
 
