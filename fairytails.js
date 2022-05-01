@@ -66,7 +66,7 @@ async function downloadMp3(id, title) {
   try {
     const mp3Url = await getMp3Url(url);
     request.get(mp3Url).pipe(fs.createWriteStream(`downloads/${title}.mp3`));
-    console.log('Downloading...: ' + title);
+    console.log(title + ' downloading...');
   } catch (err) {
     console.log(err);
   }
