@@ -10,19 +10,19 @@ npm install
 
 # Examples:
 
-Download latest fairytale
+Download latest fairytale:
 
 ```javascript
 node fairytails.js --latest
 ```
 
-Download last 10 fairytales.
+Download last 10 fairytales:
 
 ```javascript
 node fairytails.js
 ```
 
-Download last 15 fairytales (max is 50).
+Download last 15 fairytales (max is 50):
 
 ```javascript
 node fairytails.js --last=15
