@@ -29,4 +29,4 @@ node fairytails.js --last=15
 ```
 
 
-All fairytails will be saved in **downloads** folder.
+All fairytails are saved in **downloads** folder.
