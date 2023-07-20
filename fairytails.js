@@ -158,10 +158,15 @@ async function downloadLatest(last, date) {
   let progressCounter = 0;
   // For is waiting for promise to resolve
   for (const fairy_tale of fairytales) {
+    let title = fairy_tale.title;
+    // Check if title contains / and replace it with -
+    if (title.includes("/")) {
+      title = title.replace(/\//g, "-");
+    }
     // Start and wait for file to be downloaded
     const fileExists = await downloadMp3(
       fairy_tale.id,
-      fairy_tale.title,
+      title,
       fairy_tale.prettyDates.iso
     );
 
@@ -178,7 +183,7 @@ async function downloadLatest(last, date) {
       console.log(
         `Progress: ${progressPercentage.toFixed(2)}% - ${
           fairy_tale.prettyDates.iso
-        }: ${fairy_tale.title} -> downloaded.`
+        }: ${title} -> downloaded.`
       );
     }
   }
