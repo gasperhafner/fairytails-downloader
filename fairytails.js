@@ -78,6 +78,11 @@ async function downloadMp3(id, title, date) {
   }
   if (downloadedTitles.includes(title)) {
     console.log(`Title "${title}" already exists in downloaded.txt.`);
+
+    fs.writeFile("date.txt", date, function (err) {
+      if (err) throw err;
+    });
+
     return true;
   }
 
